@@ -61,4 +61,14 @@ Originally it is not my code, but it comes from the book.
    [The Definitive Guide to the Xen Hypervisor]: <https://www.amazon.com/Definitive-Hypervisor-Prentice-Software-Development/dp/0133582493>
    [Xen Master]: <https://github.com/xen-project/xen>
    [Mini-OS]: <https://github.com/mirage/mini-os>
+
+
+<br>
+
+### Building Examples on Linux PC *(without errors)*
+
+A simple make command may not work (i.e., throw errors). To overcome do the following
+1. Clone https://github.com/xen-project/xen.git in the same folder where you cloned this *(xen-hypervisor-examples)* repo
+2. Create a symbolic link name 'xen-master' and point that to 'xen' *(i.e., the repo you just cloned in step 1)*
+3. Rename "xen/xen/include/public/features.h" to "xen/xen/include/public/features.renamed.h" to avoid getting make errors.
    
