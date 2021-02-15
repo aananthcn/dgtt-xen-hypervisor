@@ -1,0 +1,3 @@
+{
+    "C_Cpp.default.includePath": ["../xen/xen/include/public"]
+}
