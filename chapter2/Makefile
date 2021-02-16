@@ -26,7 +26,7 @@ endif
 
 all: clean testkernel
 
-testkernel: $(OBJS) kernel.o
+testkernel: $(OBJS) kernel.o timeofday.o string.o
 	@echo Compiled for ARCH=${ARCH}
 	$(LD) $(LDFLAGS) $^ -o testkernel
 
