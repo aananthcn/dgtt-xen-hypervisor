@@ -4,7 +4,7 @@
  *
  */
 #include <stdint.h>
-#include <xen/xen.h> 
+#include <xen.h>
 #include "time.h"
 #include "hypercall_dbg-x86_64.h"
 

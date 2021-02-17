@@ -6,9 +6,9 @@
 
 /* Some static space for the stack */
 char stack[8192];
+
 /* Page of memory used to hold shared info*/
 extern char shared_info[4096];
-
 extern shared_info_t *HYPERVISOR_shared_info;
 
 /* This structure contains start-of-day info, such as pagetable base pointer,
@@ -22,8 +22,7 @@ union start_info_union start_info_union;
 #define start_info (start_info_union.start_info)
 
 /* Helpers to don't use external libs */
-static
-shared_info_t *map_shared_info(unsigned long pa)
+static shared_info_t *map_shared_info(unsigned long pa)
 {
     int rc;
     
@@ -62,19 +61,21 @@ void start_kernel(start_info_t * si)
 {
 	struct timeval tp;
 	static char buff[] = "00000000000000000000000000000\n";
-        //Have to map Hypervisor shared info to VM kernel space 
+
+    //Have to map Hypervisor shared info to VM kernel space 
 	memcpy(&start_info, si, sizeof(*si));
-        HYPERVISOR_console_io(CONSOLEIO_write,14,"\nKernel Start\n");
-        HYPERVISOR_shared_info = map_shared_info(start_info.shared_info);
+    HYPERVISOR_console_io(CONSOLEIO_write, 14, "\nKernel Start\n");
+    HYPERVISOR_shared_info = map_shared_info(start_info.shared_info);
 	
 	if(gettimeofday(&tp, 0) != 0){
-		HYPERVISOR_console_io(CONSOLEIO_write,15,"#: gtod FAILED\n");
+		HYPERVISOR_console_io(CONSOLEIO_write, 15, "#: gtod FAILED\n");
 	} else{
 		// Test if gtod works? print usec
 		convert(tp.tv_usec, 16, buff); 
-		HYPERVISOR_console_io(CONSOLEIO_write,29, buff);
+		HYPERVISOR_console_io(CONSOLEIO_write, 29, buff);
 	}
-        HYPERVISOR_console_io(CONSOLEIO_write,5,"End.\n");
+
+    HYPERVISOR_console_io(CONSOLEIO_write,5,"End.\n");
 	while(1);
 }
 
