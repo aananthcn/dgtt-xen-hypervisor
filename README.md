@@ -89,4 +89,9 @@ The above step will install xen images in /boot, but libraries in /usr/local/lib
 3. Add "alias sudo='sudo LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH'" in the end of ~/.bashrc
 
 Once these are done, then re-boot and do "sudo xl create domain_config" then do "sudo xl dmesg", you should be able to see the messages that you pass through HYPERVISOR_console_io() function.
+
+**Note(s)**:
+If you are still not seeing the console io prints, then try these:
+* guest_loglvl=all in the command line
+* xl set-parameters 'guest_loglvl=all'
    
