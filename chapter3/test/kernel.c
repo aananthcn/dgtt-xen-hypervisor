@@ -37,7 +37,8 @@ void convert(long num, int base, char buff[30])
 {
     char *nums = "0123456789abcdef";
     char *ptr;
-    ptr = &buff[29];
+    buff[28] = '\n';
+    ptr = &buff[28];
     do {
         *--ptr = nums[num%base];
         num /= base;
