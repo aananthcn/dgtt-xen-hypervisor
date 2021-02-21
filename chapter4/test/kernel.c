@@ -6,7 +6,7 @@
 /* Some static space for the stack */
 char stack[8192];
 
-uint32_t shared_page[32]; 
+uint32_t shared_page[32];  // this has to be page (4k) aligned.
 grant_entry_t * grant_table;
 
 void convert(long num, int base, char buff[21]) {
@@ -38,7 +38,10 @@ void offer_page()
 
         /* Offer the grant */
         grant_table[0].domid = DOMID_FRIEND;
-        grant_table[0].frame = *shared_page >> 12;
+/* The following line is commented suspecting error!
+        grant_table[0].frame = *shared_page >> 12; // why is addr=0 shared as frame addr?
+*/
+        grant_table[0].frame = (uint32_t)shared_page >> 12; 
         flags = GTF_permit_access & GTF_reading & GTF_writing;
         grant_table[0].flags = flags;
 }
