@@ -1,0 +1,12 @@
+[Unit]
+Description=Xen daemons that are to be started every time -- Aananth C N.
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+User=root
+Environment="LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH"
+ExecStart=/etc/init.d/xencommons start
+
+[Install]
+WantedBy=multi-user.target
