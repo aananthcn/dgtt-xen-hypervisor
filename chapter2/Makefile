@@ -3,7 +3,7 @@ ARCH = x86_64
 XEN_SRC = ../../xen-master
 
 LDFLAGS  += -nostdlib
-CFLAGS   += -Wall -Werror -std=c99 -I$(XEN_SRC)/xen/include/public
+CFLAGS   += -m64 -Werror -I$(XEN_SRC)/xen/include/public
 ASFLAGS  += -D__ASSEMBLY__ -I$(XEN_SRC)/xen/include/public
 
 ifeq ($(ARCH),x86_32)
@@ -26,7 +26,7 @@ endif
 
 all: clean testkernel
 
-testkernel: $(OBJS) kernel.o timeofday.o string.o
+testkernel: $(OBJS) kernel.o
 	@echo Compiled for ARCH=${ARCH}
 	$(LD) $(LDFLAGS) $^ -o testkernel
 
