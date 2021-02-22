@@ -62,6 +62,8 @@ void start_kernel(start_info_t * si)
 {
 	struct timeval tp;
 	static char buff[] = "00000000000000000000000000000\n";
+    time_t sec_old;
+    uint32_t cnt = 0;
 
     //Have to map Hypervisor shared info to VM kernel space 
 	memcpy(&start_info, si, sizeof(*si));
@@ -74,9 +76,17 @@ void start_kernel(start_info_t * si)
 		// Test if gtod works? print usec
 		convert(tp.tv_usec, 16, buff); 
 		HYPERVISOR_console_io(CONSOLEIO_write, 29, buff);
+        sec_old = tp.tv_sec;
 	}
 
     HYPERVISOR_console_io(CONSOLEIO_write,5,"End.\n");
-	while(1);
+	while(1) {
+        gettimeofday(&tp, 0);
+        if (tp.tv_sec != sec_old) {
+            convert(++cnt, 10, buff);
+            HYPERVISOR_console_io(CONSOLEIO_write, 29, buff);
+            sec_old = tp.tv_sec;
+        }
+    }
 }
 
