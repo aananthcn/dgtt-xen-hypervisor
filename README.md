@@ -94,4 +94,6 @@ Once these are done, then re-boot and do "sudo xl create domain_config" then do 
 If you are still not seeing the console io prints, then try these:
 * guest_loglvl=all in the command line
 * xl set-parameters 'guest_loglvl=all'
+* You may need to start the following daemons as below
+  * sudo LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH /etc/init.d/xencommons start
    

@@ -168,3 +168,14 @@ size_t strnlen(const char *str, size_t maxlen) {
     return maxlen;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// function: strncpy
+void *memcpy(void *dst, const void *src, size_t num ) {
+    char *ptr = dst;
+    char *d = (char*)dst;
+    char *s = (char*)src;
+    while (num--) {
+        *d++ = *s++;
+    }
+    return ptr;
+}
