@@ -1,5 +1,6 @@
 Setup
 =====
-1) Copy all the files in this folder to /usr/lib/systemd/system folder.
+1) Copy xendaemon.service to /usr/lib/systemd/system folder.
 2) sudo systemctl daemon-reload
 3) sudo systemctl start xendaemon
+4) sudo systemctl enable xendaemon.service
