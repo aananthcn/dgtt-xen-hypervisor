@@ -79,14 +79,17 @@ A simple make command may not work (i.e., throw errors). To overcome do the foll
 Most of the console io messages won't be visible in the console, when do your initial chapters. If you need to view them, then do the following
 1. git clone https://github.com/xen-project/xen.git
 2. Install the required packages that are listed in https://wiki.xenproject.org/wiki/Compiling_Xen_From_Source#Build_Dependencies
-3. ./configure --enable-systemd --enable-debug
-4. make dist -j8 debug=y
-5. make install debug=y
+3. sudo apt install python3-dev libudev-dev libsystemd-dev
+4. ./configure --enable-systemd --enable-debug --libdir=/usr/local/lib64
+5. make dist -j8 debug=y
+6. make install debug=y
+7. update-grub
+
 
 The above step will install xen images in /boot, but libraries in /usr/local/lib. This will break some of the tools such as xl. Follow the steps below:
 1. sudo vi /etc/sudoers
 2. Add "Defaults        env_keep += "LD_LIBRARY_PATH"" to the above file
-3. Add "alias sudo='sudo LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH'" in the end of ~/.bashrc
+3. Add "alias sudo='sudo LD_LIBRARY_PATH=/usr/local/lib64:$LD_LIBRARY_PATH'" in the end of ~/.bashrc
 
 Once these are done, then re-boot and do "sudo xl create domain_config" then do "sudo xl dmesg", you should be able to see the messages that you pass through HYPERVISOR_console_io() function.
 
