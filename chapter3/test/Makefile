@@ -1,5 +1,5 @@
 CC=gcc
-XEN_SRC = ../../../xen-master
+XEN_SRC = ../../../xen
 
 LDFLAGS  += -nostdlib -m elf_x86_64 -T x86_64.lds
 CPPFLAGS += -I$(XEN_SRC)/xen/include/public -fno-stack-protector -g
