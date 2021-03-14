@@ -7,6 +7,19 @@ static evtchn_port_t console_evt;
 extern char _text;
 struct xencons_interface * console;
 
+/* putchar: added by Aananth */
+int putchar(int c)
+{
+	int ring_index = MASK_XENCONS_IDX(console->out_prod, console->out);
+	console->out[ring_index] = c;
+	/* Ensure that the data really is in the ring before continuing */
+	wmb();
+	/* Increment input and output pointers */
+	console->out_prod++;
+
+	return 0;
+}
+
 /* Read up to length characters from the console into buffer */
 int console_read(char * buffer, int n)
 {
@@ -21,9 +34,16 @@ int console_read(char * buffer, int n)
                 console->in_cons++;
                 wmb();
         }
-        /* NULL-terminate the string */
-        *buffer = '\0';
-        return length;
+
+		/* Aananth: insert a new-line for every return */
+		if (*(buffer - 1) == '\r') {
+			*buffer = '\n';
+			buffer++;
+		}
+
+		/* NULL-terminate the string */
+		*buffer = '\0';
+		return length;
 }
 
 /* Event received on console event channel */
